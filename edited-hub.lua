@@ -918,7 +918,9 @@ function Luminosity.new(Name, Header, Icon)
                         Name = "Logo",
                         BackgroundTransparency = 1,
                         Size = UDim2.new(0, 30, 0, 30),
-                        Image = "rbxassetid://" .. tostring(Icon),
+                        Image = Icon and "rbxassetid://" .. tostring(Icon) or "rbxassetid://4370345701",
+                        ImageRectOffset = Vector2.new(364,164),
+                        ImageRectSize = Vector2.new(36,36),
                         ScaleType = Enum.ScaleType.Fit
                     }),
                     Utility.new("TextLabel", {
@@ -1036,7 +1038,7 @@ function Luminosity.new(Name, Header, Icon)
     local Window = {
         Title = Name and tostring(Name) or "Luminosity";
         Header = Header and tostring(Header) or "v1.0.0";
-        Icon =  "rbxassetid://" .. tostring(Icon);
+        Icon = tostring(Icon) or "4370345701";
         Toggled = true;
     }
     local WindowInfo = {
@@ -1088,7 +1090,9 @@ function Luminosity.new(Name, Header, Icon)
                 BackgroundTransparency = 1,
                 Position = UDim2.new(0, 15, 0.5, 0),
                 Size = UDim2.new(0, 20, 0, 20),
-                Image = "rbxassetid://" .. tostring(Icon),
+                Image = Icon and "rbxassetid://" .. tostring(Icon) or "rbxassetid://6023426915",
+                ImageRectOffset = Vector2.new(364,164),
+                ImageRectSize = Vector2.new(36,36),
                 ImageTransparency = 0.3
             }),
             Utility.new("TextLabel", {
@@ -1174,7 +1178,9 @@ function Luminosity.new(Name, Header, Icon)
                     Position = UDim2.new(0, 0, 0, 10),
                     Size = UDim2.new(0, 10, 0, 10),
                     Image = "rbxassetid://6031625146",
-                    ImageTransparency = 0.3
+                    ImageTransparency = 0.3,
+                    ImageRectOffset = Vector2.new(364,164),
+                    ImageRectSize = Vector2.new(36,36)
                 }),
             
                 -- Title --
@@ -1335,6 +1341,8 @@ function Luminosity.new(Name, Header, Icon)
                     Position = UDim2.new(0, 0, 0, 10),
                     Size = UDim2.new(0, 10, 0, 10),
                     Image = "rbxassetid://6031625146",
+                    ImageRectOffset = Vector2.new(364,164),
+                    ImageRectSize = Vector2.new(36,36),
                     ImageTransparency = 0.3
                 }),
 
