@@ -848,7 +848,7 @@ local function CreateOptions(Frame)
     return Options
 end
 
-function Luminosity.new(Name, Header, rect, rect2)
+function Luminosity.new(Name, Header, rect, rect2, rbx)
     local Main = Utility.new(
         -- Class --
         "ImageButton",
@@ -918,7 +918,7 @@ function Luminosity.new(Name, Header, rect, rect2)
                         Name = "Logo",
                         BackgroundTransparency = 1,
                         Size = UDim2.new(0, 30, 0, 30),
-                        Image = "rbxassetid://3926307971",
+                        Image = rbx,
                         ImageRectOffset = Vector2.new(rect,rect2),
                         ImageRectSize = Vector2.new(36,36),
                         ScaleType = Enum.ScaleType.Fit
@@ -1065,7 +1065,7 @@ function Luminosity.new(Name, Header, rect, rect2)
         end
     end
 
-    function Window.Tab(Title, rect, rect2)
+    function Window.Tab(Title, rect, rect2, rbx)
         local TabFrame = Utility.new("ScrollingFrame", {
             Name = "Tab",
             Parent = Main.Contents,
@@ -1090,7 +1090,7 @@ function Luminosity.new(Name, Header, rect, rect2)
                 BackgroundTransparency = 1,
                 Position = UDim2.new(0, 15, 0.5, 0),
                 Size = UDim2.new(0, 20, 0, 20),
-                Image = "rbxassetid://3926307971",
+                Image = rbx,
                 ImageRectOffset = Vector2.new(rect,rect2),
                 ImageRectSize = Vector2.new(36,36),
                 ImageTransparency = 0.3
@@ -1155,7 +1155,7 @@ function Luminosity.new(Name, Header, rect, rect2)
         -- Tab --
         local Tab = {}
 
-        function Tab.Folder(Title, Description, rect, rect2)
+        function Tab.Folder(Title, Description, rect, rect2, rbx)
             local Properties = {}
 
             local Base =  Utility.new("ImageLabel", {
@@ -1177,7 +1177,7 @@ function Luminosity.new(Name, Header, rect, rect2)
                     BackgroundTransparency = 1,
                     Position = UDim2.new(0, 0, 0, 10),
                     Size = UDim2.new(0, 10, 0, 10),
-                    Image = "rbxassetid://3926307971",
+                    Image = rbx,
                     ImageRectOffset = Vector2.new(rect,rect2),
                     ImageRectSize = Vector2.new(36,36),
                     ImageTransparency = 0.3
