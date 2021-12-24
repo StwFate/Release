@@ -919,6 +919,8 @@ function Luminosity.new(Name, Header, Icon)
                         BackgroundTransparency = 1,
                         Size = UDim2.new(0, 30, 0, 30),
                         Image = Icon and "rbxassetid://" .. tostring(Icon) or "rbxassetid://4370345701",
+                        ImageRectOffset = Vector2.new(364,164),
+                        ImageRectSize = Vector2.new(36,36),
                         ScaleType = Enum.ScaleType.Fit
                     }),
                     Utility.new("TextLabel", {
@@ -1176,9 +1178,9 @@ function Luminosity.new(Name, Header, Icon)
                     Position = UDim2.new(0, 0, 0, 10),
                     Size = UDim2.new(0, 10, 0, 10),
                     Image = "rbxassetid://6031625146",
-                    ImageTransparency = 0.3,
                     ImageRectOffset = Vector2.new(364,164),
-                    ImageRectSize = Vector2.new(36,36)
+                    ImageRectSize = Vector2.new(36,36),
+                    ImageTransparency = 0.3
                 }),
             
                 -- Title --
