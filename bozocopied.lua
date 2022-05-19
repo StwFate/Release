@@ -27,27 +27,27 @@ library.theme = {
     cursor = false,
     cursorimg = "https://i.pinimg.com/564x/02/48/18/0248185c3693b0e51e7a2db57753c497.jpg",
     backgroundcolor = Color3.fromRGB(20, 20, 20),
-    tabstextcolor = Color3.fromRGB(225, 75, 0),
+    tabstextcolor = Color3.fromRGB(240, 240, 240),
     bordercolor = Color3.fromRGB(60, 60, 60),
     accentcolor = Color3.fromRGB(28, 56, 139),
     accentcolor2 = Color3.fromRGB(16, 31, 78),
     outlinecolor = Color3.fromRGB(60, 60, 60),
     outlinecolor2 = Color3.fromRGB(0, 0, 0),
     sectorcolor = Color3.fromRGB(30, 30, 30),
-    toptextcolor = Color3.fromRGB(225, 75, 0),
+    toptextcolor = Color3.fromRGB(255, 255, 255),
     topheight = 48,
     topcolor = Color3.fromRGB(30, 30, 30),
     topcolor2 = Color3.fromRGB(30, 30, 30),
     buttoncolor = Color3.fromRGB(49, 49, 49),
     buttoncolor2 = Color3.fromRGB(39, 39, 39),
-    itemscolor = Color3.fromRGB(255, 255, 255),
-    itemscolor2 = Color3.fromRGB(255, 255, 255)
+    itemscolor = Color3.fromRGB(200, 200, 200),
+    itemscolor2 = Color3.fromRGB(210, 210, 210)
 }
 
 if not _G.AccentColors then
     _G.AccentColors = {
-        Accent1 = Color3.fromRGB(225, 75, 0),
-        Accent2 = Color3.fromRGB(225, 75, 0)
+        Accent1 = Color3.fromRGB(252, 255, 255),
+        Accent2 = Color3.fromRGB(255, 255, 255)
     }
 end
 
@@ -780,9 +780,7 @@ function library:CreateWindow(name, size, hidebutton)
                 end)
 
                 function label:Set(value)
-                    spawn(function() while wait() do
-                        label.Main.Text = value
-                    end end)
+                    label.Main.Text = value
                 end
 
                 sector:FixSize()
