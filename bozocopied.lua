@@ -40,8 +40,8 @@ library.theme = {
     topcolor2 = Color3.fromRGB(30, 30, 30),
     buttoncolor = Color3.fromRGB(49, 49, 49),
     buttoncolor2 = Color3.fromRGB(39, 39, 39),
-    itemscolor = Color3.fromRGB(200, 200, 200),
-    itemscolor2 = Color3.fromRGB(210, 210, 210)
+    itemscolor = Color3.fromRGB(225, 75, 0),
+    itemscolor2 = Color3.fromRGB(225, 75, 0)
 }
 
 if not _G.AccentColors then
