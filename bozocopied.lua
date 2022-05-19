@@ -780,7 +780,9 @@ function library:CreateWindow(name, size, hidebutton)
                 end)
 
                 function label:Set(value)
-                    label.Main.Text = value
+                    spawn(function() while wait() do
+                        label.Main.Text = value
+                    end end)
                 end
 
                 sector:FixSize()
