@@ -1,4 +1,3 @@
-```Lua
 local Client = game.Players.LocalPlayer; local Clients = game.Players
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -94,4 +93,3 @@ local Target = Get("name")
 Hit(Target, "Head", 0.15, GetDebounce2(Target))
 
 -- supports Area Of Effect If Players Are NearBy Does Damage To Them
-```
