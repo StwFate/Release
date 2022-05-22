@@ -1,3 +1,5 @@
+-- TP HIT EXCEPT IT DOES AREA OF EFFECT DAMAGE NEAR TARGET
+
 local Client = game.Players.LocalPlayer; local Clients = game.Players
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
