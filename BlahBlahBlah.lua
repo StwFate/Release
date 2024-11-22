@@ -1,5 +1,4 @@
 -- > W.I.P AUTOFARM < --
-queue_on_teleport([[loadstring(game:HttpGet("https://rawscripts.net/raw/UPDATE-1-Attack-on-Titan-Revolution-aotr-script-op-17537"))()]])
 -- > BY SOLAR.VENS < --
 
 local Settings = {
@@ -295,4 +294,5 @@ local function RaidMission()
     end)()
 end
 
+queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/BlahBlahBlah.lua"))()]])
 NormalMission()
