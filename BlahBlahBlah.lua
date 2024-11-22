@@ -1,4 +1,5 @@
 -- > W.I.P AUTOFARM < --
+queue_on_teleport([[loadstring(game:HttpGet("https://rawscripts.net/raw/UPDATE-1-Attack-on-Titan-Revolution-aotr-script-op-17537"))()]])
 -- > BY SOLAR.VENS < --
 
 local Settings = {
