@@ -2,9 +2,9 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 300; -- Less Is Faster
-    KillDistance = 20; -- Kill Distance in XZ Axis
-    Height = 100
+    Speed = 200; -- Less Is Faster
+    KillDistance = 15; -- Kill Distance in XZ Axis
+    Height = 75
 }
 
 -- > SERVICES 
@@ -74,8 +74,9 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = 265; [5] = 0.15
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(2300,2600)/10; [5] = math.random(100,250)/1000
     }
+    print(Arguments[4], Arguments[5])
 
     GET:InvokeServer(unpack(Arguments))
 end
