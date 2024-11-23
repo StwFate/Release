@@ -2,9 +2,9 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 300; -- Less Is Faster
-    KillDistance = 20; -- Kill Distance in XZ Axis
-    Height = 125
+    Speed = 200; -- Less Is Faster
+    KillDistance = 15; -- Kill Distance in XZ Axis
+    Height = 75
 }
 
 -- > SERVICES 
@@ -74,8 +74,9 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = 275; [5] = 0.1
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(2300,2600)/10; [5] = math.random(100,250)/1000
     }
+    print(Arguments[4], Arguments[5])
 
     GET:InvokeServer(unpack(Arguments))
 end
@@ -150,11 +151,14 @@ end
 -- > RUNNING
 
 CoreGui:WaitForChild("RobloxPromptGui"):WaitForChild("promptOverlay").ChildAdded:Connect(function()
-    TeleportService:Teleport(game.PlaceId, Speaker)
+    while task.wait(1) do
+        TeleportService:Teleport(game.PlaceId, Speaker)
+    end
 end)
 
 local function NormalMission()
-    task.wait(6) -- Wait for Mission to Load
+    if #Titans:GetChildren() > 0 then else Titans.ChildAdded:Wait() end
+    task.wait(1.5)  -- Wait for Mission to Load
 
     local BodyPos = CreateForce(); -- Creates Linear Vector Force
 
