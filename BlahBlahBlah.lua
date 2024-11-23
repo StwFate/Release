@@ -6,6 +6,7 @@ local Settings = {
     KillDistance = 20; -- Kill Distance in XZ Axis
     Height = 100
 }
+
 -- > SERVICES 
 
 local Players = game:GetService("Players")
@@ -33,12 +34,13 @@ local POST = Remotes:WaitForChild("POST")
 
 -- > FUNCTIONS
 
-local function GetNearTitan()
+local function GetNearTitan(NearEren)
     local MaxDist = math.huge; local Closest = nil;
+    local NextDistance = nil; if NearEren then NextDistance = Vector3.new(-2061, 0, 823) end
     for _, Titan in next, Titans:GetChildren() do
         local HRP = Titan:FindFirstChild("HumanoidRootPart")
-        if HRP and Root then 
-            local Distance = (HRP.Position - Root.Position).Magnitude
+        if HRP and Root then
+            local Distance = ((NextDistance or Root.Position) - HRP.Position).Magnitude
             local Dead = Titan:GetAttribute("Dead")
             if Distance < MaxDist and not Dead then
                 MaxDist = Distance
@@ -72,7 +74,7 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = 245; [5] = 40
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = 265; [5] = 0.15
     }
 
     GET:InvokeServer(unpack(Arguments))
@@ -152,7 +154,8 @@ CoreGui:WaitForChild("RobloxPromptGui"):WaitForChild("promptOverlay").ChildAdded
 end)
 
 local function NormalMission()
-    task.wait(6) -- Wait for Mission to Load
+    if #Titans:GetChildren() > 0 then else Titans.ChildAdded:Wait() end
+    task.wait(1.5)  -- Wait for Mission to Load
 
     local BodyPos = CreateForce(); -- Creates Linear Vector Force
 
@@ -232,7 +235,14 @@ local function RaidMission()
     local AttackTitan = nil;
 
     while task.wait() do
-        local Titan = GetNearTitan()
+        local Titan = GetNearTitan(true)
+
+        AttackTitan = Titans:FindFirstChild("Attack_Titan")
+        if AttackTitan then
+            print("Attack Titan Protected: Time for BOSS")
+            break;
+        end
+
         if Titan then
             local LastTick = tick()
             repeat
@@ -254,37 +264,40 @@ local function RaidMission()
                 end
 
             task.wait() until not Titan.Parent or Dead
-            
-            local AttackTitan = Titans:FindFirstChild("Attack_Titan")
-            if AttackTitan then 
-                print("Attack Titan Protected: Time for BOSS")
-                break;
-            end
         end
     end
 
+    -- > ATTACK TITAN (REPEATING LOOP)
+    local LastTick = tick()
     repeat
-        local TrueDistance = GetDistanceXZ(Root.Position, AttackTitan.Hitboxes.Hit.Nape.Position)
-        
-        local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height, 0)
-        local Direction = (NextBodyPos - Root.Position).Unit
+        AttackTitan = Titans:FindFirstChild("Attack_Titan")
+        if AttackTitan then
+            local TrueDistance = GetDistanceXZ(Root.Position, AttackTitan.Hitboxes.Hit.Nape.Position)
+            
+            local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height + 60, 0)
+            local Direction = (NextBodyPos - Root.Position).Unit
 
-        if TrueDistance < 12 then
-            BodyPos.VectorVelocity = Vector3.new(0, 0, 0)
-        else
-            BodyPos.VectorVelocity = Direction * Settings.Speed
+            if TrueDistance < 12 then
+                BodyPos.VectorVelocity = Vector3.new(0, 0, 0)
+            else
+                BodyPos.VectorVelocity = Direction * Settings.Speed
+            end
+
+            if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
+                HitTitan(AttackTitan, AttackTitan.Marker.Adornee)
+                LastTick = tick()
+            end
         end
-
-        if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
-            HitTitan(AttackTitan, AttackTitan.Marker.Adornee)
-            LastTick = tick()
-        end
-
     task.wait() until not AttackTitan.Parent
 
     BodyPos.Enabled = false;
-
-    task.wait(1); OpenFreeChest(); task.wait(1)
+    
+    coroutine.wrap(function()
+        while task.wait(0.25) do
+            OpenFreeChest();
+        end
+    end)()
+     task.wait(1)
 
     coroutine.wrap(function()
         while task.wait(0.5) do
