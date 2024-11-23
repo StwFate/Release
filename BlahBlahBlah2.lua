@@ -34,12 +34,13 @@ local POST = Remotes:WaitForChild("POST")
 
 -- > FUNCTIONS
 
-local function GetNearTitan()
+local function GetNearTitan(NearEren)
     local MaxDist = math.huge; local Closest = nil;
+    local NextDistance = nil; if NearEren then NextDistance = Vector3.new(-2061, 0, 823) end
     for _, Titan in next, Titans:GetChildren() do
         local HRP = Titan:FindFirstChild("HumanoidRootPart")
-        if HRP and Root then 
-            local Distance = (HRP.Position - Root.Position).Magnitude
+        if HRP and Root then
+            local Distance = ((NextDistance or Root.Position) - HRP.Position).Magnitude
             local Dead = Titan:GetAttribute("Dead")
             if Distance < MaxDist and not Dead then
                 MaxDist = Distance
@@ -233,10 +234,10 @@ local function RaidMission()
     local AttackTitan = nil;
 
     while task.wait() do
-        local Titan = GetNearTitan()
+        local Titan = GetNearTitan(true)
 
         AttackTitan = Titans:FindFirstChild("Attack_Titan")
-        if AttackTitan then 
+        if AttackTitan then
             print("Attack Titan Protected: Time for BOSS")
             break;
         end
@@ -265,23 +266,26 @@ local function RaidMission()
         end
     end
 
+    local LastTick = tick()
     repeat
-        local TrueDistance = GetDistanceXZ(Root.Position, AttackTitan.Hitboxes.Hit.Nape.Position)
-        
-        local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height, 0)
-        local Direction = (NextBodyPos - Root.Position).Unit
+        AttackTitan = Titans:FindFirstChild("Attack_Titan")
+        if AttackTitan then
+            local TrueDistance = GetDistanceXZ(Root.Position, AttackTitan.Hitboxes.Hit.Nape.Position)
+            
+            local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height, 0)
+            local Direction = (NextBodyPos - Root.Position).Unit
 
-        if TrueDistance < 12 then
-            BodyPos.VectorVelocity = Vector3.new(0, 0, 0)
-        else
-            BodyPos.VectorVelocity = Direction * Settings.Speed
+            if TrueDistance < 12 then
+                BodyPos.VectorVelocity = Vector3.new(0, 0, 0)
+            else
+                BodyPos.VectorVelocity = Direction * Settings.Speed
+            end
+
+            if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
+                HitTitan(AttackTitan, AttackTitan.Marker.Adornee)
+                LastTick = tick()
+            end
         end
-
-        if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
-            HitTitan(AttackTitan, AttackTitan.Marker.Adornee)
-            LastTick = tick()
-        end
-
     task.wait() until not AttackTitan.Parent
 
     BodyPos.Enabled = false;
@@ -295,6 +299,5 @@ local function RaidMission()
     end)()
 end
 
-print("Ran Queue")
 queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/BlahBlahBlah2.lua"))()]])
 RaidMission()
