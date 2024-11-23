@@ -296,5 +296,5 @@ local function RaidMission()
 end
 
 print("Ran Queue")
-queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/BlahBlahBlah.lua"))()]])
+queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/BlahBlahBlah2.lua"))()]])
 RaidMission()
