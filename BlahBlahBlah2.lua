@@ -272,7 +272,7 @@ local function RaidMission()
         if AttackTitan then
             local TrueDistance = GetDistanceXZ(Root.Position, AttackTitan.Hitboxes.Hit.Nape.Position)
             
-            local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height, 0)
+            local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height + 60, 0)
             local Direction = (NextBodyPos - Root.Position).Unit
 
             if TrueDistance < 12 then
