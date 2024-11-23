@@ -2,9 +2,9 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 325; -- Less Is Faster
-    KillDistance = 30; -- Kill Distance in XZ Axis
-    Height = 100
+    Speed = 400; -- Less Is Faster
+    KillDistance = 40; -- Kill Distance in XZ Axis
+    Height = 125
 }
 
 -- > SERVICES 
@@ -74,7 +74,7 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = 245; [5] = 40
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = 275; [5] = 0.1
     }
 
     GET:InvokeServer(unpack(Arguments))
@@ -266,6 +266,7 @@ local function RaidMission()
         end
     end
 
+    -- > ATTACK TITAN (REPEATING LOOP)
     local LastTick = tick()
     repeat
         AttackTitan = Titans:FindFirstChild("Attack_Titan")
@@ -289,8 +290,13 @@ local function RaidMission()
     task.wait() until not AttackTitan.Parent
 
     BodyPos.Enabled = false;
-
-    task.wait(1); OpenFreeChest(); task.wait(1)
+    
+    coroutine.wrap(function()
+        while task.wait(0.25) do
+            OpenFreeChest();
+        end
+    end)()
+     task.wait(1)
 
     coroutine.wrap(function()
         while task.wait(0.5) do
