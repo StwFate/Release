@@ -150,7 +150,9 @@ end
 -- > RUNNING
 
 CoreGui:WaitForChild("RobloxPromptGui"):WaitForChild("promptOverlay").ChildAdded:Connect(function()
-    TeleportService:Teleport(game.PlaceId, Speaker)
+    while task.wait(1) do
+        TeleportService:Teleport(game.PlaceId, Speaker)
+    end
 end)
 
 local function NormalMission()
