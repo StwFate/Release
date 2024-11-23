@@ -2,8 +2,8 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 400; -- Less Is Faster
-    KillDistance = 40; -- Kill Distance in XZ Axis
+    Speed = 325; -- Less Is Faster
+    KillDistance = 35; -- Kill Distance in XZ Axis
     Height = 125
 }
 
