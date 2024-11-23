@@ -2,11 +2,10 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 325; -- Less Is Faster
-    KillDistance = 30; -- Kill Distance in XZ Axis
-    Height = 100
+    Speed = 300; -- Less Is Faster
+    KillDistance = 20; -- Kill Distance in XZ Axis
+    Height = 125
 }
-
 -- > SERVICES 
 
 local Players = game:GetService("Players")
