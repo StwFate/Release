@@ -2,10 +2,12 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 200; -- Less Is Faster
-    KillDistance = 15; -- Kill Distance in XZ Axis
-    Height = 133
+    Speed = 333; -- Less Is Faster
+    KillDistance = 25; -- Kill Distance in XZ Axis
+    Height = 125
 }
+
+--task.wait(9e9)
 
 -- > SERVICES 
 
@@ -74,7 +76,7 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(2300,2600)/10; [5] = math.random(100,250)/1000
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(3300,3600)/10; [5] = math.random(100,250)/1000
     }
     print(Arguments[4], Arguments[5])
 
@@ -142,6 +144,10 @@ local function OpenFreeChest()
     }
 
     GET:InvokeServer(unpack(Arguments))
+end
+
+local function CollectRewards()
+    GET:InvokeServer("S_Rewards", "Get")
 end
 
 local function FloorVector(Vector)
@@ -287,6 +293,7 @@ local function RaidMission()
             end
 
             if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
+                --AttackTitan.Marker.Adornee
                 HitTitan(AttackTitan, AttackTitan.Marker.Adornee)
                 LastTick = tick()
             end
@@ -298,9 +305,10 @@ local function RaidMission()
     coroutine.wrap(function()
         while task.wait(0.25) do
             OpenFreeChest();
+            CollectRewards();
         end
     end)()
-     task.wait(1)
+    task.wait(1)
 
     coroutine.wrap(function()
         while task.wait(0.5) do
