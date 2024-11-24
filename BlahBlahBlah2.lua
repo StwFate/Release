@@ -308,7 +308,7 @@ local function RaidMission()
             CollectRewards();
         end
     end)()
-    task.wait(1)
+    task.wait(3)
 
     coroutine.wrap(function()
         while task.wait(0.5) do
