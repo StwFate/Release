@@ -2,7 +2,7 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 333; -- Less Is Faster
+    Speed = 300; -- Less Is Faster
     KillDistance = 25; -- Kill Distance in XZ Axis
     Height = 125
 }
@@ -76,7 +76,7 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(3300,3600)/10; [5] = math.random(100,250)/1000
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(3600,3900)/10; [5] = math.random(100,250)/1000
     }
     print(Arguments[4], Arguments[5])
 
@@ -276,6 +276,8 @@ local function RaidMission()
         end
     end
 
+    --GET:InvokeServer("S_Skills", "Usage", "109", false)
+
     -- > ATTACK TITAN (REPEATING LOOP)
     local LastTick = tick()
     repeat
@@ -305,10 +307,12 @@ local function RaidMission()
     coroutine.wrap(function()
         while task.wait(0.25) do
             OpenFreeChest();
+            task.wait(0.1)
             CollectRewards();
-        end
+        end 
     end)()
-    task.wait(3)
+
+    task.wait(5)
 
     coroutine.wrap(function()
         while task.wait(0.5) do
