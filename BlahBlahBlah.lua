@@ -4,7 +4,7 @@
 local Settings = {
     Speed = 200; -- Less Is Faster
     KillDistance = 15; -- Kill Distance in XZ Axis
-    Height = 75
+    Height = 133
 }
 
 -- > SERVICES 
