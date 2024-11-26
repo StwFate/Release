@@ -1,10 +1,10 @@
 -- > W.I.P AUTOFARM < --
 -- > BY SOLAR.VENS < --
 
-local Settings = {
-    Speed = 265; -- More Is Faster
+getgenv().Settings = {
+    Speed = 325; -- More Is Faster, safe ODM Speed
     KillDistance = 25; -- Kill Distance in XZ Axis
-    Height = 125
+    Height = 125; -- Self Explanatory
 }
 
 --task.wait(9e9)
