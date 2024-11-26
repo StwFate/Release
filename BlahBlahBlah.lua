@@ -2,7 +2,7 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 325; -- More Is Faster
+    Speed = 265; -- More Is Faster
     KillDistance = 25; -- Kill Distance in XZ Axis
     Height = 125
 }
@@ -80,7 +80,7 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(4160,4300)/10; [5] = math.random(100,250)/1000
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(3160,3300)/10; [5] = math.random(100,250)/1000
     }
 
     GET:InvokeServer(unpack(Arguments))
@@ -97,14 +97,14 @@ local function HitEren(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart; [4] = math.random(4160,4300)/10; [5] = math.random(100,250)/1000
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart; [4] = math.random(3160,3300)/10; [5] = math.random(100,250)/1000
     }
 
     GET:InvokeServer(unpack(Arguments))
 
     for _, Hit in next, Hitboxes:GetChildren() do
         Arguments = {
-            [1] = "Hitboxes"; [2] = "Register"; [3] = Hit; [4] = math.random(4160,4300)/10; [5] = math.random(100,250)/1000
+            [1] = "Hitboxes"; [2] = "Register"; [3] = Hit; [4] = math.random(3160,3300)/10; [5] = math.random(100,250)/1000
         }
     
         GET:InvokeServer(unpack(Arguments))
@@ -236,7 +236,7 @@ local function NormalMission()
                     BodyPos.VectorVelocity = Direction * Settings.Speed
                 end
 
-                if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.3 then
+                if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.5 then
                     HitTitan(Titan)
                     LastTick = tick()
                 end
