@@ -2,7 +2,7 @@
 -- > BY SOLAR.VENS < --
 
 local Settings = {
-    Speed = 300; -- Less Is Faster
+    Speed = 325; -- More Is Faster
     KillDistance = 25; -- Kill Distance in XZ Axis
     Height = 125
 }
@@ -36,8 +36,12 @@ local POST = Remotes:WaitForChild("POST")
 
 -- > FUNCTIONS
 
+local function ConvertToXZ(Pos)
+    return Vector3.new(Pos.X, 0, Pos.Z)
+end
+
 local function GetNearTitan(NearEren)
-    local MaxDist = math.huge; local Closest = nil;
+    local MaxDist = math.huge; local Closest = nil; --local FollowTo = workspace:WaitForChild("Characters"):WaitForChild('zalianthangaltaccyes'):WaitForChild("HumanoidRootPart") -- Vector3.new(-2061, 0, 823)
     local NextDistance = nil; if NearEren then NextDistance = Vector3.new(-2061, 0, 823) end
     for _, Titan in next, Titans:GetChildren() do
         local HRP = Titan:FindFirstChild("HumanoidRootPart")
@@ -76,11 +80,36 @@ local function HitTitan(Titan, TrueHitPart)
     POST:FireServer(unpack(Arguments))
 
     Arguments = {
-        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(3600,3900)/10; [5] = math.random(100,250)/1000
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart or HitPart; [4] = math.random(4160,4300)/10; [5] = math.random(100,250)/1000
     }
-    print(Arguments[4], Arguments[5])
 
     GET:InvokeServer(unpack(Arguments))
+end
+
+local function HitEren(Titan, TrueHitPart)
+    local Hitboxes = Titan.Hitboxes.Hit
+    local HitPart = Hitboxes.Nape
+
+    local Arguments = {
+        [1] = "Attacks"; [2] = "Slash"; [3] = true;
+    }
+
+    POST:FireServer(unpack(Arguments))
+
+    Arguments = {
+        [1] = "Hitboxes"; [2] = "Register"; [3] = TrueHitPart; [4] = math.random(4160,4300)/10; [5] = math.random(100,250)/1000
+    }
+
+    GET:InvokeServer(unpack(Arguments))
+
+    for _, Hit in next, Hitboxes:GetChildren() do
+        Arguments = {
+            [1] = "Hitboxes"; [2] = "Register"; [3] = Hit; [4] = math.random(4160,4300)/10; [5] = math.random(100,250)/1000
+        }
+    
+        GET:InvokeServer(unpack(Arguments))
+        task.wait()
+    end 
 end
 
 local function GetDistanceXZ(Pos, Pos2)
@@ -150,6 +179,14 @@ local function CollectRewards()
     GET:InvokeServer("S_Rewards", "Get")
 end
 
+local function CollectPremiumChest()
+    local Arguments = {
+        [1] = "S_Rewards"; [2] = "Chest"; [3] = "Premium";
+    }
+
+    GET:InvokeServer(unpack(Arguments))
+end
+
 local function FloorVector(Vector)
     return Vector3.new(math.floor(Vector.X), math.floor(Vector.Y), math.floor(Vector.Z))
 end
@@ -164,7 +201,6 @@ end)
 
 local function NormalMission()
     if #Titans:GetChildren() > 0 then else Titans.ChildAdded:Wait() end
-    task.wait(1.5)  -- Wait for Mission to Load
 
     local BodyPos = CreateForce(); -- Creates Linear Vector Force
 
@@ -200,7 +236,7 @@ local function NormalMission()
                     BodyPos.VectorVelocity = Direction * Settings.Speed
                 end
 
-                if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
+                if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.3 then
                     HitTitan(Titan)
                     LastTick = tick()
                 end
@@ -212,10 +248,10 @@ local function NormalMission()
         end
     end
 
-    BodyPos.Enabled = false;
+    BodyPos.Enabled = false; task.wait(2)
 
     coroutine.wrap(function()
-        while task.wait(0.5) do
+        while task.wait(1) do
             Retry()
         end
     end)()
@@ -267,7 +303,7 @@ local function RaidMission()
                     BodyPos.VectorVelocity = Direction * Settings.Speed
                 end
 
-                if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
+                if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.6 then
                     HitTitan(Titan)
                     LastTick = tick()
                 end
@@ -276,7 +312,19 @@ local function RaidMission()
         end
     end
 
-    --GET:InvokeServer("S_Skills", "Usage", "109", false)
+    BodyPos.VectorVelocity = Vector3.new(-2061, 0, 823)
+
+    GET:InvokeServer("S_Skills", "Usage", "109", false)
+    coroutine.wrap(function()
+        task.wait(8)
+        GET:InvokeServer("S_Skills", "Usage", "95", false)
+        task.wait(3)
+        GET:InvokeServer("S_Skills", "Usage", "97", false)
+        task.wait(15)
+        GET:InvokeServer("S_Skills", "Usage", "95", false)
+        task.wait(3)
+        GET:InvokeServer("S_Skills", "Usage", "97", false)
+    end)()
 
     -- > ATTACK TITAN (REPEATING LOOP)
     local LastTick = tick()
@@ -285,7 +333,7 @@ local function RaidMission()
         if AttackTitan then
             local TrueDistance = GetDistanceXZ(Root.Position, AttackTitan.Hitboxes.Hit.Nape.Position)
             
-            local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height + 60, 0)
+            local NextBodyPos = AttackTitan.Hitboxes.Hit.Nape.Position + Vector3.new(0, Settings.Height + 125, 0)
             local Direction = (NextBodyPos - Root.Position).Unit
 
             if TrueDistance < 12 then
@@ -294,7 +342,7 @@ local function RaidMission()
                 BodyPos.VectorVelocity = Direction * Settings.Speed
             end
 
-            if TrueDistance < Settings.KillDistance and tick() - LastTick > 0.54 then
+            if TrueDistance < Settings.KillDistance and tick() - LastTick > 1 then
                 --AttackTitan.Marker.Adornee
                 HitTitan(AttackTitan, AttackTitan.Marker.Adornee)
                 LastTick = tick()
@@ -306,13 +354,13 @@ local function RaidMission()
     
     coroutine.wrap(function()
         while task.wait(0.25) do
-            OpenFreeChest();
+            OpenFreeChest(); CollectPremiumChest()
             task.wait(0.1)
             CollectRewards();
         end 
     end)()
 
-    task.wait(3)
+    task.wait(5)
 
     coroutine.wrap(function()
         while task.wait(0.5) do
@@ -321,5 +369,4 @@ local function RaidMission()
     end)()
 end
 
-queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/BlahBlahBlah.lua"))()]])
 NormalMission()
