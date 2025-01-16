@@ -48,6 +48,8 @@ local function Enter1v1()
     end)()
 end
 
+task.wait(1.5)
+
 if game.PlaceId == RankedLobby then
     Enter1v1()
     print("In Ranked Lobby")
