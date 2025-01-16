@@ -1,3 +1,5 @@
+if game:IsLoaded() then else game.Loaded:Wait() end
+
 local Players = game.Players
 local Player = Players.LocalPlayer
 
