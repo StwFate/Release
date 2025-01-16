@@ -64,4 +64,4 @@ coroutine.wrap(function()
     end
 end)()
 
-queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/AltAndMain.lua"))()]])
+queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/AltAndMain2.lua"))()]])
