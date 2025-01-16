@@ -46,6 +46,7 @@ end
 
 if game.PlaceId == RankedLobby then
     Enter1v1()
+    print("In Ranked Lobby")
 end
 
 if game.PlaceId == Ranked1v1 and Player == AltPlayer then
@@ -54,6 +55,7 @@ if game.PlaceId == Ranked1v1 and Player == AltPlayer then
             Player.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
         end
     end
+    print("In Ranked 1v1")
 end
 
 queue_on_teleport([[loadstring(game:HttpGet("https://raw.githubusercontent.com/StwFate/Release/refs/heads/main/AltAndMain.lua"))()]])
